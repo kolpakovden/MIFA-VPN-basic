@@ -25,9 +25,11 @@ The installer automatically detects and parses the correct format.
 
 ## Installation
 
+```
 git clone https://github.com/kolpakovden/MIFA-VPN-basic.git
 cd MIFA-VPN-basic
 sudo bash install.sh
+```
 
 ## License
 MIT
