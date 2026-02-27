@@ -5,8 +5,8 @@
 set -euo pipefail
 
 DEFAULT_PORT="8443"
-DEFAULT_SNI="www.cloudflare.com"
-DEFAULT_TARGET="www.cloudflare.com:443"
+DEFAULT_SNI="www.microsoft.com"
+DEFAULT_TARGET="www.microsoft.com:443"
 FINGERPRINT="chrome"
 
 # --- helpers ---
