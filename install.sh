@@ -120,7 +120,31 @@ fi
 ok "Порт ${PORT} свободен"
 
 info "Устанавливаем Xray (официальный installer)..."
-bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+install_xray() {
+  if command -v xray >/dev/null 2>&1; then
+    ok "Xray уже установлен"
+    return
+  fi
+
+  info "Пробуем установить Xray через APT (deb.xray.guru)..."
+  if curl -fsSL --max-time 8 https://deb.xray.guru >/dev/null 2>&1; then
+    apt-get update -y
+    apt-get install -y ca-certificates gnupg >/dev/null
+
+    curl -fsSL https://deb.xray.guru/pubkey.gpg | gpg --dearmor -o /usr/share/keyrings/xray-archive-keyring.gpg
+    echo "deb [signed-by=/usr/share/keyrings/xray-archive-keyring.gpg] https://deb.xray.guru stable main" \
+      > /etc/apt/sources.list.d/xray.list
+
+    apt-get update -y
+    apt-get install -y xray
+    ok "Xray установлен через APT"
+    return
+  fi
+
+  info "APT-репозиторий недоступен. Пробуем официальный GitHub installer..."
+  bash -c "$(curl -fsSL https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+  ok "Xray установлен через GitHub installer"
+}
 need_cmd xray
 ok "Xray установлен"
 
