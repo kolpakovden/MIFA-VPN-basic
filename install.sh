@@ -180,8 +180,8 @@ require_root
 need_cmd curl
 need_cmd openssl
 need_cmd systemctl
-need_cmd awk
 need_cmd sed
+need_cmd tr
 
 if ! is_port_free "$PORT"; then
   err "Порт ${PORT} занят. Освободи его и повтори."
