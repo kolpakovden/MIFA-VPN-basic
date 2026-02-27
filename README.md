@@ -18,10 +18,12 @@ Ready-to-import VLESS URI output
 ```
 ## Reality Key Compatibility
 
+```
 This release supports both:
 Legacy Xray output (Private key / Public key)
 New Xray v26+ output (PrivateKey / Password)
 The installer automatically detects and parses the correct format.
+```
 
 ## Installation
 
