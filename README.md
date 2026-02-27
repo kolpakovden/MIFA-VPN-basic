@@ -1,6 +1,6 @@
-# MIFA-VPN-basic v1.0.0
+# mifa-vpn-basic v1.0.0
 
-First stable public release of MIFA-VPN-basic - a minimal, production-ready installer for Xray (VLESS + Reality).
+First stable public release of mifa-vpn-basi - a minimal, production-ready installer for Xray (VLESS + Reality).
 
 ## Features
 ```
