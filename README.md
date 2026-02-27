@@ -1,6 +1,16 @@
 # mifa-vpn-basic v1.0.0
 
-First stable public release of mifa-vpn-basi - a minimal, production-ready installer for Xray (VLESS + Reality).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Xray](https://img.shields.io/badge/Xray-v26%2B-green)](https://github.com/XTLS/Xray-core)
+[![Ubuntu Tested](https://img.shields.io/badge/Tested-Ubuntu%2022.04%20%7C%2024.04-orange)]()
+
+Minimal, production-ready installer for **Xray (VLESS + Reality)**.
+
+> Default RU-friendly port: **8443**  
+> Supports modern **Xray v26+ (Password/pbk format)**  
+> Clean, minimal, no telemetry.
+
+---
 
 ## Features
 
@@ -19,13 +29,18 @@ Ready-to-import VLESS URI output
 ```
 
 ## Reality Key Compatibility
-
+This installer supports both:
+Legacy Xray output
 ```
-This release supports both:
-Legacy Xray output (Private key / Public key)
-New Xray v26+ output (PrivateKey / Password)
-The installer automatically detects and parses the correct format.
+Private key
+Public key
 ```
+Xray v26+ output
+```
+PrivateKey
+Password
+```
+The script automatically detects and parses the correct format.
 
 ## Installation
 
@@ -34,6 +49,24 @@ git clone https://github.com/kolpakovden/MIFA-VPN-basic.git
 cd MIFA-VPN-basic
 sudo bash install.sh
 ```
+
+## Security Note
+
+Reality is a transport obfuscation layer, not a full anonymity system.
+This project:
+```
+Protects traffic from simple DPI
+Obfuscates TLS handshake
+Helps bypass censorship in restrictive networks
+```
+This project does NOT:
+```
+Provide anonymity like Tor
+Protect against endpoint compromise
+Prevent server-side logging
+Protect against traffic correlation attacks
+```
+You are responsible for proper operational security (OPSEC).
 
 ## License
 MIT
