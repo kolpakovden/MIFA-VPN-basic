@@ -1,8 +1,7 @@
 # MIFA-VPN-basic
 
-Minimal installer for **Xray (VLESS + Reality)**.
-
-**Goal:** one script → working VLESS Reality on **TCP 443**.
+Minimal installer for **Xray (VLESS + Reality)**.  
+RU-friendly default port: **8443** (because 443 may be unreliable under DPI).
 
 ## Install
 ```
@@ -11,7 +10,15 @@ git clone https://github.com/<you>/MIFA-VPN-basic.git
 cd MIFA-VPN-basic
 sudo bash install.sh
 ```
-At the end, the script prints a ready VLESS URI for your client.
+The script prints a ready-to-import VLESS URI.
+
+## Presets
+```
+sudo bash install.sh --8443
+sudo bash install.sh --443
+sudo bash install.sh --port 12345
+sudo bash install.sh --non-interactive --8443
+```
 
 ## Paths
 
