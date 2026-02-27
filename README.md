@@ -5,7 +5,6 @@ RU-friendly default port: **8443** (because 443 may be unreliable under DPI).
 
 ## Install
 ```
-```bash
 git clone https://github.com/<you>/MIFA-VPN-basic.git
 cd MIFA-VPN-basic
 sudo bash install.sh
