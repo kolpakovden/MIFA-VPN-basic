@@ -26,3 +26,9 @@ xray run -test -config /usr/local/etc/xray/config.json
 ss -tuln | grep 443
 
 ## License
+MIT
+
+## Disclaimer
+
+This project is provided for infrastructure automation purposes.
+Ensure compliance with laws and regulations in your jurisdiction.
