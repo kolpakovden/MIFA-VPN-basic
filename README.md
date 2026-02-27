@@ -3,6 +3,7 @@
 First stable public release of mifa-vpn-basi - a minimal, production-ready installer for Xray (VLESS + Reality).
 
 ## Features
+
 ```
 Minimal and clean Xray installer
 VLESS + Reality configuration
@@ -16,6 +17,7 @@ Supports Xray v26+ (Password/pbk format)
 systemd service integration
 Ready-to-import VLESS URI output
 ```
+
 ## Reality Key Compatibility
 
 ```
