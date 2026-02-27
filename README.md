@@ -29,7 +29,7 @@ sudo bash install.sh --non-interactive --8443
 ```
 journalctl -u xray -f
 xray run -test -config /usr/local/etc/xray/config.json
-ss -tuln | grep 443
+ss -tuln | grep -E '443|8443'
 ```
 
 ## License
