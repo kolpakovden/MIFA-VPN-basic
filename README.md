@@ -38,5 +38,7 @@ MIT
 
 ## Disclaimer
 
+```
 This project is intended for infrastructure automation and educational purposes.
 Ensure compliance with local laws and regulations in your jurisdiction.
+```
