@@ -1,188 +1,148 @@
-markdown
+# MIFA-VPN
 
-# Xray Configuration
+Production-ready modular installer for Xray (VLESS + Reality).
 
-Настройка Xray (VLESS + Reality) для базовой версии проекта.
+MIFA-VPN is a structured, open-source deployment toolkit built around Xray-core.  
+It provides a clean installation lifecycle, modular architecture and production-grade setup flow.
 
-**Основной конфиг:**
+---
+
+## Features
+
+- Modular installer (`--core`, `--monitoring`, `--bot`)
+- Idempotent installation
+- Upgrade & uninstall support
+- Auto-generation of UUID and Reality keys
+- Structured repository layout
+- Production-oriented design
+- Ready for automation & CI
+
+---
+
+## What It Installs
+
+Core module installs:
+
+- Xray (VLESS + Reality)
+- Systemd service
+- Auto-generated secure config
+- Proper directory structure
+
+Optional modules:
+
+- Monitoring stack (placeholder)
+- Automation bot (placeholder)
+
+---
+
+## 🏗 Architecture
+
+Client
+↓
+Internet
+↓
+VLESS + Reality (TCP 443)
+↓
+Xray
+↓
+Freedom outbound
+
+---
+
+## Quick Start
+
+### Clone repository
 
 ```bash
-/usr/local/etc/xray/config.json
+git clone https://github.com/yourname/MIFA-VPN.git
+cd MIFA-VPN
 
-Пример с комментариями: ../config/example.config.json
-Server Configuration
-Минимальные параметры inbound
-Field	Description
-port	Порт входящего подключения (обычно 443)
-protocol	vless
-id	UUID пользователя
-email	Идентификатор пользователя (для логов)
-flow	Для Reality: xtls-rprx-vision
-Пример секции clients
-json
+### Install everything
+sudo ./cmd/install.sh --all
 
-"clients": [
-  {
-    "id": "uuid-пользователя",
-    "flow": "xtls-rprx-vision",
-    "email": "username@server.com"
-  }
-]
+Or install only core:
 
-Adding a New User
-1. Сгенерировать UUID
-bash
+sudo ./cmd/install.sh --core
 
-xray uuid
-# или
-uuidgen  # если установлен
+---
 
-2. Добавить в секцию clients
+| Command        | Description                 |
+| -------------- | --------------------------- |
+| `--core`       | Install Xray core           |
+| `--monitoring` | Install monitoring module   |
+| `--bot`        | Install automation bot      |
+| `--all`        | Install everything          |
+| `--upgrade`    | Upgrade Xray                |
+| `--uninstall`  | Remove installed components |
 
-Открой конфиг:
-bash
+---
 
-nano /usr/local/etc/xray/config.json
+## Directory Structure
 
-Найди секцию clients и добавь нового пользователя:
-json
+cmd/            → CLI entrypoint
+internal/       → Installer modules
+core/           → Xray templates
+monitoring/     → Monitoring stack
+automation/     → Bot & automation
+docs/           → Documentation
+security/       → Security hardening
 
-"clients": [
-  {
-    "id": "старый-uuid",
-    "flow": "xtls-rprx-vision",
-    "email": "old@server.com"
-  },
-  {
-    "id": "новый-uuid",      # сгенерированный UUID
-    "flow": "xtls-rprx-vision",
-    "email": "new@server.com"
-  }
-]
+---
 
-3. Проверить конфиг
-bash
+## Security Model
 
-xray run -test -config /usr/local/etc/xray/config.json
+Reality transport enabled
+Private key generated on server
+UUID per client
+Config permissions 640
+Systemd integration
+For full hardening guide see:
 
-4. Перезапустить Xray
-bash
+security/security-hardening.md
 
-systemctl restart xray
+---
 
-Reality Keys
-Генерация ключей
-bash
+## Production Notes
 
-xray x25519
+---
 
-# Пример вывода:
-# Private key: 6PojkKen7NLwOCgOzXK12R-pi0knJx7Qq-Gxxxxxxxx
-# Public key: 6PojkKen7NLwOCgOzXK12R-pi0knJx7Qq-Gyyyyyyyyyy
+Requires systemd-based Linux (Ubuntu/Debian recommended)
+Port 443 must be free
+Run as root
+Monitoring module is optional
+Designed for VPS deployment
 
-# ShortID (8 символов)
-openssl rand -hex 8
-# Пример: 3a8f5c1e9d2b7a4c
+---
 
-Где использовать
-Key	Где разместить
-privateKey	В realitySettings сервера (конфиг Xray)
-publicKey	В клиентском конфиге (для подключения)
-shortId	В обоих конфигах (сервер и клиент)
-Пример в конфиге
-json
+## Upgrade
+sudo ./cmd/install.sh --upgrade
 
-"realitySettings": {
-  "show": false,
-  "target": "www.microsoft.com:443",
-  "xver": 0,
-  "serverNames": [
-    "www.microsoft.com"
-  ],
-  "privateKey": "6PojkKen7NLwOCgOzXK12R-pi0knJx7Qq-Gxxxxxxxx",
-  "publicKey": "6PojkKen7NLwOCgOzXK12R-pi0knJx7Qq-Gyyyyyyyyyy",
-  "shortIds": [
-    "3a8f5c1e9d2b7a4c"
-  ]
-}
+---
 
-Validate Configuration
+## Uninstall
+sudo ./cmd/install.sh --uninstall
 
-Перед перезапуском всегда проверяй конфиг:
-bash
+---
 
-xray run -test -config /usr/local/etc/xray/config.json
+## License
+MIT License
 
-Если ошибок нет — можно перезапускать:
-bash
+---
 
-systemctl restart xray
-systemctl status xray
+---
 
-Logs
+#  Текущее состояние проекта
 
-Логи подключений пишутся в:
-bash
+| Компонент | Статус |
+|------------|--------|
+| Структура | ✅ |
+| Installer | ✅ |
+| Lifecycle | ✅ |
+| OSS-ready | ✅ |
+| README | ✅ после обновления |
+| CI | ❌ (следующий шаг) |
+| Docker | ❌ |
+| Multi-user | ❌ |
 
-/var/log/xray/access.log
+---
 
-Просмотр в реальном времени:
-bash
-
-tail -f /var/log/xray/access.log
-
-Пример записи в логе:
-text
-
-192.168.1.100:54321 accepted tcp: www.google.com:443 [user@server.com]
-
-Quick Troubleshooting
-Проверить статус сервиса
-bash
-
-systemctl status xray
-
-Проверить логи systemd
-bash
-
-journalctl -u xray -f
-
-Проверить access.log
-bash
-
-tail -f /var/log/xray/access.log
-
-Проверить, слушает ли порт
-bash
-
-ss -tulpn | grep 443
-# или
-netstat -tulpn | grep 443
-
-Основные ошибки
-Ошибка	Решение
-permission denied	Проверь права на /var/log/xray
-address already in use	Порт 443 занят другим сервисом (nginx?)
-invalid private key	Неправильный формат ключа
-failed to start	Ошибка в конфиге — проверь -test
-Recommended Workflow
-
-    Сгенерировать ключи (xray x25519 + openssl rand -hex 8)
-
-    Сгенерировать UUID для пользователя
-
-    Добавить пользователя в config.json
-
-    Проверить конфиг (-test)
-
-    Перезапустить Xray
-
-    Проверить логи (journalctl -u xray -f)
-
-    Проверить подключение с клиента
-
-📚 Дополнительно
-
-    Официальная документация Xray   - https://xtls.github.io/
-
-    Генератор конфигов - https://raw.githubusercontent.com/chise0713/warp-reg.sh/master/warp-reg.sh
